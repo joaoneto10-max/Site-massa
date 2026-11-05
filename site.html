@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arquivo do Esquecido: lugares que a humanidade nunca explorou por completo.">
+  <title>:: ARQUIVO DO ESQUECIDO ::</title>
+
+  <style>
+    /* =========================================================
+       ARQUIVO DO ESQUECIDO — estilo "web antiga" assombrada
+       Paleta: roxo, preto, escarlate, cinza, azul
+       ========================================================= */
+
+    :root {
+      --preto: #050008;
+      --preto-2: #0d0414;
+      --roxo-escuro: #26063d;
+      --roxo: #5b1a8c;
+      --roxo-claro: #a45bff;
+      --escarlate: #d0101f;
+      --escarlate-escuro: #6e0710;
+      --cinza: #8d8d9c;
+      --cinza-claro: #c9c9d6;
+      --cinza-escuro: #2b2b36;
+      --azul: #3c6cff;
+      --azul-escuro: #12205e;
+      --texto: #d8d2e6;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--texto);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      background-color: var(--preto);
+      background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 90px 120px, var(--roxo-claro) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 160px 60px, var(--escarlate) 50%, transparent 51%),
+        radial-gradient(1px 1px at 60px 180px, var(--azul) 50%, transparent 51%),
+        radial-gradient(1px 1px at 200px 200px, #fff 50%, transparent 51%),
+        linear-gradient(180deg, var(--preto) 0%, var(--roxo-escuro) 100%);
+      background-size: 220px 220px, 220px 220px, 220px 220px, 220px 220px, 220px 220px, 100% 100%;
+      background-attachment: fixed;
+      cursor: crosshair;
+    }
+
+    ::selection { background: var(--escarlate); color: #fff; }
+
+    a { color: var(--azul); }
+    a:hover { color: var(--escarlate); text-decoration: wavy underline; }
+
+    /* ---------- Efeitos globais ---------- */
+    .scanlines {
+      position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0, rgba(0,0,0,0.22) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode: multiply;
+    }
+    .vignette {
+      position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.75) 100%);
+    }
+
+    .blink { animation: piscar 1s steps(2, start) infinite; }
+    @keyframes piscar { to { visibility: hidden; } }
+
+    /* ---------- Faixa de aviso ---------- */
+    .ticker {
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--escarlate-escuro);
+      border-bottom: 2px solid var(--escarlate);
+      color: #ffd9dc;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+    .ticker-track { display: inline-block; animation: correr 38s linear infinite; }
+    .ticker-track span { display: inline-block; padding-right: 2rem; }
+    @keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ---------- Topo ---------- */
+    .topo { text-align: center; padding: 28px 12px 10px; }
+    .topo-pre {
+      margin: 0; font-family: "Courier New", monospace; color: var(--cinza);
+      letter-spacing: 4px; font-size: 12px;
+    }
+    .topo h1 {
+      margin: 6px 0;
+      font-family: Impact, "Arial Black", sans-serif;
+      font-size: clamp(2rem, 7vw, 4.4rem);
+      letter-spacing: 4px;
+      color: var(--roxo-claro);
+      text-shadow: 3px 3px 0 var(--escarlate), 6px 6px 0 var(--preto), 0 0 22px var(--roxo);
+      position: relative;
+      display: inline-block;
+    }
+    .topo-sub { margin: 0; color: var(--cinza-claro); font-family: "Courier New", monospace; }
+    .topo-barra {
+      height: 6px; margin: 16px auto 0; max-width: 900px;
+      background: repeating-linear-gradient(90deg, var(--roxo) 0 12px, var(--preto) 12px 18px, var(--escarlate) 18px 30px, var(--preto) 30px 36px);
+      box-shadow: 0 0 12px var(--roxo);
+    }
+
+    /* Glitch do título */
+    .glitch.on::before, .glitch.on::after {
+      content: attr(data-text);
+      position: absolute; left: 0; top: 0; width: 100%;
+      overflow: hidden;
+    }
+    .glitch.on::before { color: var(--azul); transform: translate(-4px, -2px); clip-path: inset(10% 0 55% 0); }
+    .glitch.on::after  { color: var(--escarlate); transform: translate(4px, 2px); clip-path: inset(60% 0 8% 0); }
+
+    /* ---------- Layout ---------- */
+    .layout {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 18px;
+      max-width: 1100px;
+      margin: 18px auto 30px;
+      padding: 0 14px;
+    }
+    .lateral, .conteudo { display: flex; flex-direction: column; gap: 18px; }
+
+    /* ---------- Caixas estilo tabela 3D antiga ---------- */
+    .caixa {
+      background: linear-gradient(160deg, rgba(20,6,32,0.96), rgba(8,2,14,0.96));
+      border: 3px ridge var(--roxo);
+      box-shadow: 0 0 0 1px var(--preto), 6px 6px 0 var(--escarlate-escuro);
+      padding: 14px 16px 16px;
+    }
+    .caixa p { margin: 0 0 10px; }
+    .caixa-titulo {
+      margin: -14px -16px 12px;
+      padding: 5px 10px;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: #fff;
+      background: linear-gradient(90deg, var(--roxo) 0%, var(--roxo-escuro) 70%, var(--preto) 100%);
+      border-bottom: 2px solid var(--escarlate);
+      text-shadow: 1px 1px 0 var(--preto);
+    }
+    .mini { font-size: 11px; color: var(--cinza); }
+    em { color: var(--escarlate); font-style: normal; border-bottom: 1px dotted var(--escarlate); }
+    strong { color: var(--roxo-claro); }
+
+    /* ---------- Menu ---------- */
+    .menu { list-style: none; margin: 0; padding: 0; }
+    .menu li { margin-bottom: 6px; }
+    .menu a {
+      display: block; text-decoration: none; color: var(--cinza-claro);
+      padding: 4px 8px;
+      border: 2px outset var(--cinza-escuro);
+      background: var(--cinza-escuro);
+      font-size: 13px;
+    }
+    .menu a:hover, .menu a:focus {
+      color: #fff; background: var(--escarlate-escuro); border-style: inset; text-decoration: none;
+    }
+
+    /* ---------- Status ---------- */
+    .status-linha { font-size: 12px; color: var(--cinza); margin-top: 10px !important; margin-bottom: 4px !important; }
+    .contador {
+      font-family: "Courier New", monospace; font-size: 22px; letter-spacing: 4px;
+      text-align: center; color: var(--escarlate);
+      background: #000; border: 3px inset var(--cinza-escuro); padding: 4px;
+      text-shadow: 0 0 8px var(--escarlate);
+    }
+    .relogio {
+      font-family: "Courier New", monospace; font-size: 18px; text-align: center;
+      color: var(--azul); background: #000; border: 3px inset var(--cinza-escuro); padding: 3px;
+    }
+    .sistema {
+      font-family: "Courier New", monospace; font-size: 12px; color: #9fb4ff;
+      min-height: 3.2em; transition: opacity .4s;
+    }
+
+    /* ---------- Botões ---------- */
+    .botao, .filtro {
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      color: #fff;
+      background: var(--roxo);
+      border: 3px outset var(--roxo-claro);
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .botao:hover, .filtro:hover { background: var(--escarlate-escuro); border-color: var(--escarlate); }
+    .botao:active, .filtro:active { border-style: inset; }
+    .botao:focus-visible, .filtro:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible, .cartao:focus-visible {
+      outline: 2px dashed var(--escarlate); outline-offset: 2px;
+    }
+    .filtro.ativo { background: var(--escarlate); border-color: #ff6b76; }
+
+    .selo-caixa { text-align: center; }
+    .selo {
+      margin: 6px auto; padding: 6px; width: 140px; font-size: 11px; font-weight: bold;
+      color: var(--cinza-claro); background: linear-gradient(#1b1b25, #07070b);
+      border: 2px outset var(--cinza);
+    }
+    .selo-b { color: #ffe36b; border-color: #ffe36b; animation: piscar 2s steps(2, start) infinite; }
+
+    /* ---------- Formulários ---------- */
+    input[type="text"], textarea {
+      width: 100%;
+      background: #000; color: var(--cinza-claro);
+      border: 3px inset var(--cinza-escuro);
+      font-family: "Courier New", monospace; font-size: 13px;
+      padding: 6px; margin: 4px 0 10px;
+    }
+    .ferramentas { margin-bottom: 8px; }
+    .filtros { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+
+    /* ---------- Mapa ---------- */
+    .mapa-wrap { position: relative; border: 3px inset var(--cinza-escuro); background: #000; }
+    #mapaCanvas { display: block; width: 100%; height: 340px; }
+    .mapa-dica {
+      position: absolute; left: 8px; bottom: 8px;
+      font-family: "Courier New", monospace; font-size: 11px; color: var(--escarlate);
+      background: rgba(0,0,0,0.75); padding: 2px 6px; pointer-events: none;
+    }
+
+    /* ---------- Catálogo ---------- */
+    .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .cartao {
+      position: relative; text-align: left; cursor: pointer;
+      background: linear-gradient(180deg, #170826, #090010);
+      border: 3px outset var(--roxo);
+      color: var(--texto); padding: 10px 12px 12px;
+      font-family: inherit;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .cartao:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--escarlate); }
+    .cartao.selecionado { border-color: var(--escarlate); box-shadow: 0 0 14px var(--escarlate-escuro); }
+    .cartao h3 { margin: 0 0 2px; font-family: Georgia, serif; font-size: 17px; color: var(--roxo-claro); }
+    .cartao .tag {
+      display: inline-block; font-family: "Courier New", monospace; font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+      background: var(--azul-escuro); color: #a9bcff; border: 1px solid var(--azul);
+      padding: 0 5px; margin-bottom: 6px;
+    }
+    .cartao .regiao { font-size: 11px; color: var(--cinza); margin: 0 0 6px; }
+    .cartao .resumo { font-size: 12px; margin: 0; color: var(--cinza-claro); }
+
+    .vazio { color: var(--cinza); font-style: italic; }
+
+    /* ---------- Dossiê ---------- */
+    .dossie { border-color: var(--escarlate-escuro); }
+    .dossie-topo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+    .dossie h3 {
+      margin: 0; font-family: Georgia, serif; font-size: 26px; color: var(--escarlate);
+      text-shadow: 2px 2px 0 #000;
+    }
+    .dossie .tag {
+      font-family: "Courier New", monospace; font-size: 11px; text-transform: uppercase;
+      color: #a9bcff; border: 1px solid var(--azul); background: var(--azul-escuro); padding: 0 6px;
+    }
+    .dossie-meta {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin: 12px 0;
+    }
+    .dossie-meta div {
+      background: #000; border: 2px inset var(--cinza-escuro); padding: 6px 8px;
+      font-family: "Courier New", monospace; font-size: 12px; color: var(--cinza-claro);
+    }
+    .dossie-meta b { display: block; color: var(--roxo-claro); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .dossie ul.fatos { padding-left: 20px; }
+    .dossie ul.fatos li { margin-bottom: 6px; }
+    .dossie ul.fatos li::marker { color: var(--escarlate); content: "\25B6  "; }
+
+    .esquecimento { margin: 12px 0; }
+    .barra { height: 14px; background: #000; border: 2px inset var(--cinza-escuro); }
+    .barra i {
+      display: block; height: 100%;
+      background: repeating-linear-gradient(90deg, var(--escarlate) 0 8px, var(--escarlate-escuro) 8px 12px);
+      box-shadow: 0 0 8px var(--escarlate);
+    }
+    .aviso {
+      margin-top: 14px; padding: 10px 12px;
+      border: 2px dashed var(--escarlate);
+      background: rgba(110, 7, 16, 0.25);
+      font-family: "Courier New", monospace; font-size: 12px; color: #ffc9ce;
+    }
+    .acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .acoes a.botao { text-decoration: none; display: inline-block; }
+
+    /* ---------- Livro de visitas ---------- */
+    .form-livro label { font-size: 12px; color: var(--cinza-claro); }
+    .livro { list-style: none; padding: 0; margin: 14px 0 0; }
+    .livro li {
+      border: 2px groove var(--roxo); background: #08000f; padding: 8px 10px; margin-bottom: 8px;
+    }
+    .livro .quem { color: var(--escarlate); font-weight: bold; }
+    .livro .quando { color: var(--cinza); font-size: 10px; margin-left: 6px; }
+    .livro p { margin: 4px 0 0; word-wrap: break-word; }
+
+    /* ---------- Rodapé ---------- */
+    .rodape { text-align: center; padding: 20px 10px 80px; border-top: 3px double var(--roxo); color: var(--cinza); font-size: 12px; }
+
+    /* ---------- Olhos que seguem o cursor ---------- */
+    .olhos {
+      position: fixed; right: 18px; bottom: 16px; z-index: 9999; display: flex; gap: 6px;
+      opacity: 0; transition: opacity 1.2s; pointer-events: none;
+    }
+    .olhos.visivel { opacity: .9; }
+    .olho {
+      width: 28px; height: 18px; border-radius: 50%; background: #e8e8f2;
+      border: 2px solid #000; position: relative; overflow: hidden;
+      box-shadow: 0 0 10px var(--escarlate);
+    }
+    .olho i {
+      position: absolute; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--escarlate); left: 8px; top: 3px; box-shadow: inset 0 0 0 3px #000;
+    }
+
+    /* ---------- Rastro do cursor ---------- */
+    .rastro {
+      position: fixed; z-index: 9996; pointer-events: none; font-size: 12px;
+      color: var(--roxo-claro); text-shadow: 0 0 6px var(--escarlate);
+      animation: sumir .8s forwards;
+    }
+    @keyframes sumir { to { opacity: 0; transform: translateY(14px) scale(.4); } }
+
+    /* ---------- Modo "instável" ---------- */
+    body.tremer { animation: tremer .25s linear 2; }
+    @keyframes tremer {
+      0% { transform: translate(0,0); } 25% { transform: translate(-2px,1px); }
+      50% { transform: translate(2px,-1px); } 75% { transform: translate(-1px,-2px); } 100% { transform: translate(0,0); }
+    }
+    body.invertido { filter: invert(1) hue-rotate(180deg); }
+
+    /* ---------- Responsivo ---------- */
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; }
+      #mapaCanvas { height: 260px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Faixa de aviso -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>&#9888; ESTE SITE NÃO FOI FEITO PARA SER ENCONTRADO &#9888; &nbsp;&nbsp; AS COORDENADAS SÃO APROXIMADAS &nbsp;&nbsp; NÃO VISITE SOZINHO &nbsp;&nbsp; ALGUÉM ESTÁ LENDO ESTA PÁGINA COM VOCÊ &nbsp;&nbsp; MELHOR VISUALIZADO À NOITE &nbsp;&nbsp;</span>
+      <span>&#9888; ESTE SITE NÃO FOI FEITO PARA SER ENCONTRADO &#9888; &nbsp;&nbsp; AS COORDENADAS SÃO APROXIMADAS &nbsp;&nbsp; NÃO VISITE SOZINHO &nbsp;&nbsp; ALGUÉM ESTÁ LENDO ESTA PÁGINA COM VOCÊ &nbsp;&nbsp; MELHOR VISUALIZADO À NOITE &nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <header class="topo">
+    <p class="topo-pre">~ bem-vindo, viajante ~</p>
+    <h1 id="titulo" class="glitch" data-text="ARQUIVO DO ESQUECIDO">ARQUIVO DO ESQUECIDO</h1>
+    <p class="topo-sub">lugares que o mundo parou de lembrar <span class="blink">_</span></p>
+    <div class="topo-barra"></div>
+  </header>
+
+  <div class="layout">
+
+    <!-- COLUNA ESQUERDA -->
+    <aside class="lateral">
+      <nav class="caixa">
+        <h2 class="caixa-titulo">&raquo; MENU</h2>
+        <ul class="menu">
+          <li><a href="#mapa">Mapa do Nada</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#detalhe">Dossiê aberto</a></li>
+          <li><a href="#livro">Livro de visitas</a></li>
+          <li><a href="#sobre">Sobre este arquivo</a></li>
+        </ul>
+      </nav>
+
+      <div class="caixa">
+        <h2 class="caixa-titulo">&raquo; STATUS</h2>
+        <p class="status-linha">Visitantes:</p>
+        <div class="contador" id="contador" aria-label="Contador de visitas">000666</div>
+        <p class="status-linha">Hora no abismo<br><small>(dígitos invertidos)</small></p>
+        <div class="relogio" id="relogio">--:--:--</div>
+        <p class="status-linha">Mensagem do sistema:</p>
+        <p class="sistema" id="sistema">Conexão estável.</p>
+      </div>
+
+      <div class="caixa">
+        <h2 class="caixa-titulo">&raquo; AMBIENTE</h2>
+        <button type="button" class="botao" id="btnSom">&#9835; Ligar o zumbido</button>
+        <p class="mini">Gera um som grave de fundo. Use fones por sua conta e risco.</p>
+      </div>
+
+      <div class="caixa selo-caixa">
+        <p class="mini">Melhor visto em:</p>
+        <div class="selo">Netscape 4.0<br>800x600</div>
+        <div class="selo selo-b">SITE EM<br>CONSTRUÇÃO<br>(PARA SEMPRE)</div>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+
+      <section class="caixa" id="sobre">
+        <h2 class="caixa-titulo">&raquo; LEIA ANTES DE CONTINUAR</h2>
+        <p>
+          Quase todo o planeta já foi fotografado por satélite. Isso não significa que foi
+          <em>visto</em>. Existem lagos selados sob quilômetros de gelo, cavernas que descem
+          mais de dois quilômetros, montanhas inteiras enterradas e pontos do oceano onde
+          ninguém passa por anos.
+        </p>
+        <p>
+          Este arquivo reúne <strong>oito lugares reais</strong> que continuam pouco explorados ou
+          esquecidos pela maioria das pessoas. Escolha um no mapa ou no catálogo para abrir o dossiê.
+        </p>
+        <p class="mini">Os dados são aproximados e servem como ponto de partida para pesquisa.
+          O &ldquo;índice de esquecimento&rdquo; é uma medida subjetiva e simbólica deste site.</p>
+      </section>
+
+      <section class="caixa" id="mapa">
+        <h2 class="caixa-titulo">&raquo; MAPA DO NADA</h2>
+        <p class="mini">O mundo conhecido foi removido. Restaram só as coordenadas. Clique em um ponto.</p>
+        <div class="mapa-wrap">
+          <canvas id="mapaCanvas" aria-label="Mapa de coordenadas dos lugares do arquivo" role="img"></canvas>
+          <div class="mapa-dica" id="mapaDica"></div>
+        </div>
+      </section>
+
+      <section class="caixa" id="catalogo">
+        <h2 class="caixa-titulo">&raquo; CATÁLOGO</h2>
+        <div class="ferramentas">
+          <label for="busca" class="mini">Buscar no arquivo:</label>
+          <input type="text" id="busca" placeholder="nome, região, palavra..." autocomplete="off">
+        </div>
+        <div class="filtros" id="filtros" role="group" aria-label="Filtros por tipo">
+          <button type="button" class="filtro ativo" data-tipo="todos">Todos</button>
+          <button type="button" class="filtro" data-tipo="gelo">Gelo</button>
+          <button type="button" class="filtro" data-tipo="oceano">Oceano</button>
+          <button type="button" class="filtro" data-tipo="caverna">Caverna</button>
+          <button type="button" class="filtro" data-tipo="selva">Selva</button>
+          <button type="button" class="filtro" data-tipo="montanha">Montanha</button>
+        </div>
+        <div class="grade" id="grade"></div>
+        <p class="vazio" id="vazio" hidden>Nada encontrado. Talvez já tenha sido esquecido.</p>
+      </section>
+
+      <section class="caixa dossie" id="detalhe" aria-live="polite">
+        <h2 class="caixa-titulo">&raquo; DOSSIÊ ABERTO</h2>
+        <div id="detalheConteudo">
+          <p class="vazio">Nenhum dossiê selecionado. Escolha um lugar acima.</p>
+        </div>
+      </section>
+
+      <section class="caixa" id="livro">
+        <h2 class="caixa-titulo">&raquo; LIVRO DE VISITAS</h2>
+        <form id="formLivro" class="form-livro">
+          <label for="nome">Seu nome (ou o que sobrou dele):</label>
+          <input type="text" id="nome" maxlength="30" required>
+          <label for="msg">Mensagem:</label>
+          <textarea id="msg" rows="3" maxlength="200" required></textarea>
+          <button type="submit" class="botao">Assinar</button>
+        </form>
+        <p class="mini">As mensagens ficam salvas apenas neste navegador.</p>
+        <ul class="livro" id="livroLista"></ul>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="rodape">
+    <p>&copy; 19?? - ???? Arquivo do Esquecido. Nenhum direito reservado a ninguém.</p>
+    <p class="mini">&lt;&lt; Anel da Web: Lugares Que Não Existem | <a href="#titulo">Voltar ao topo</a> | Próximo site: 404 &gt;&gt;</p>
+  </footer>
+
+  <!-- Olhos que seguem o cursor -->
+  <div class="olhos" id="olhos" aria-hidden="true">
+    <div class="olho"><i></i></div>
+    <div class="olho"><i></i></div>
+  </div>
+
+  <script>
+    /* =========================================================
+       ARQUIVO DO ESQUECIDO — script
+       Dados, mapa em canvas, filtros, livro de visitas e
+       pequenos "incidentes" para deixar o clima estranho.
+       ========================================================= */
+    (function () {
+      'use strict';
+
+      /* ---------------------------------------------------------
+         1. DADOS (coordenadas e números aproximados)
+         --------------------------------------------------------- */
+      const LUGARES = [
+        {
+          id: 'vostok',
+          nome: 'Lago Vostok',
+          tipo: 'gelo',
+          regiao: 'Antártida Oriental',
+          lat: -77.5, lon: 106.0,
+          resumo: 'Um lago de água líquida selado sob cerca de 4 km de gelo.',
+          medida: 'Cerca de 4 km de gelo acima',
+          status: 'Perfurado em 2012; água ainda pouco estudada',
+          esquecimento: 78,
+          fatos: [
+            'É o maior lago subglacial conhecido da Antártida, com mais de 10.000 km² de extensão.',
+            'Perfurações russas atingiram a água do lago em 2012, depois de décadas de trabalho.',
+            'Estima-se que esteve isolado da superfície por milhões de anos, o que o torna um laboratório natural de vida extrema.',
+            'Até hoje, a maior parte do lago nunca foi observada diretamente.'
+          ],
+          aviso: 'Algo ali embaixo espera há milhões de anos. Não existe motivo para ter pressa.'
+        },
+        {
+          id: 'bouvet',
+          nome: 'Ilha Bouvet',
+          tipo: 'oceano',
+          regiao: 'Atlântico Sul (território norueguês)',
+          lat: -54.42, lon: 3.37,
+          resumo: 'A ilha mais isolada do planeta, quase toda coberta por geleira.',
+          medida: 'Cerca de 49 km² de área',
+          status: 'Desabitada; visitas raríssimas',
+          esquecimento: 91,
+          fatos: [
+            'A terra habitada ou continental mais próxima fica a mais de 1.600 km de distância.',
+            'Cerca de 93% da ilha é coberta por gelo.',
+            'É um território da Noruega e funciona como reserva natural, sem moradores.',
+            'O litoral íngreme e o clima hostil tornam o desembarque difícil mesmo para expedições.'
+          ],
+          aviso: 'No meio do nada há um pedaço de terra. Ninguém mora ali. Ainda assim, as luzes do mapa dizem que há alguém.'
+        },
+        {
+          id: 'nemo',
+          nome: 'Ponto Nemo',
+          tipo: 'oceano',
+          regiao: 'Pacífico Sul',
+          lat: -48.88, lon: -123.39,
+          resumo: 'O ponto do oceano mais distante de qualquer terra firme.',
+          medida: 'Cerca de 2.700 km da terra mais próxima',
+          status: 'Cemitério de satélites e espaçonaves',
+          esquecimento: 85,
+          fatos: [
+            'É o chamado "polo de inacessibilidade" oceânico: o ponto mais longe de qualquer costa.',
+            'Agências espaciais costumam direcionar satélites e estações desativadas para essa região, para que caiam longe de pessoas.',
+            'Muitas vezes os humanos mais próximos do local são astronautas em órbita, a cerca de 400 km de altura.',
+            'O nome vem do capitão Nemo, personagem de Júlio Verne.'
+          ],
+          aviso: 'Tudo o que o mundo quer esquecer cai aqui. Às vezes, o mar devolve um som.'
+        },
+        {
+          id: 'gamburtsev',
+          nome: 'Montanhas Gamburtsev',
+          tipo: 'gelo',
+          regiao: 'Antártida Oriental',
+          lat: -80.5, lon: 77.0,
+          resumo: 'Uma cordilheira inteira enterrada sob o gelo, com picos que ninguém vê.',
+          medida: 'Cerca de 1.200 km de comprimento',
+          status: 'Mapeada por radar e sísmica; nunca vista a céu aberto',
+          esquecimento: 88,
+          fatos: [
+            'Foram detectadas em 1958 por uma expedição soviética, usando medições sísmicas.',
+            'Os picos chegam a milhares de metros de altitude, mas estão soterrados por gelo.',
+            'Têm formato semelhante ao dos Alpes, o que intriga cientistas sobre como surgiram no meio de um continente.',
+            'O gelo sobre elas esconde vales e cristas que só foram desenhados por radar.'
+          ],
+          aviso: 'Cumes pontiagudos, vales fundos e silêncio absoluto. Tudo isso existe e está escuro.'
+        },
+        {
+          id: 'veryovkina',
+          nome: 'Caverna Veryovkina',
+          tipo: 'caverna',
+          regiao: 'Maciço de Arabika, Abecásia (Cáucaso)',
+          lat: 43.4, lon: 40.35,
+          resumo: 'A caverna mais profunda já registrada, descendo por mais de 2 km.',
+          medida: 'Cerca de 2.200 m de profundidade',
+          status: 'Explorada só por espeleólogos experientes',
+          esquecimento: 72,
+          fatos: [
+            'Expedições a partir de 2017 e 2018 confirmaram uma profundidade superior a 2.200 metros.',
+            'É considerada a caverna mais profunda conhecida do mundo.',
+            'Trechos inundados e passagens estreitas exigem dias de descida em equipe.',
+            'Muitos ramos continuam sem mapa completo, e pode haver mais caminhos.'
+          ],
+          aviso: 'Quanto mais fundo, menos ecos. Lá embaixo, o som aprende a voltar diferente.'
+        },
+        {
+          id: 'sarisarinama',
+          nome: 'Platô de Sarisariñama',
+          tipo: 'selva',
+          regiao: 'Estado de Bolívar, Venezuela',
+          lat: 4.55, lon: -64.2,
+          resumo: 'Dolinas gigantes na selva, com florestas isoladas no fundo.',
+          medida: 'Dolinas com mais de 300 m de profundidade',
+          status: 'Acesso muito difícil; poucas expedições',
+          esquecimento: 80,
+          fatos: [
+            'O platô guarda enormes abismos chamados "simas", como a Sima Humboldt e a Sima Martel.',
+            'Foram descobertos do ar por volta de 1960 e exploradas a pé a partir da década de 1970.',
+            'No fundo, existem pequenas florestas isoladas, que lembram o "mundo perdido" da ficção.',
+            'Faz parte do parque nacional de mesmo nome, em uma região remota e de relevo de tepui.'
+          ],
+          aviso: 'Lá no fundo há árvores que nunca viram o céu aberto. Elas parecem virar-se quando alguém olha.'
+        },
+        {
+          id: 'challenger',
+          nome: 'Abismo Challenger',
+          tipo: 'oceano',
+          regiao: 'Fossa das Marianas, Pacífico Ocidental',
+          lat: 11.37, lon: 142.59,
+          resumo: 'O ponto mais profundo conhecido dos oceanos, pouquíssimas vezes visitado.',
+          medida: 'Cerca de 10.900 m de profundidade',
+          status: 'Poucos mergulhos tripulados na história',
+          esquecimento: 64,
+          fatos: [
+            'A pressão no fundo passa de mil vezes a pressão ao nível do mar.',
+            'Em 1960, dois homens desceram até lá a bordo do batiscafo Trieste.',
+            'Mais de meio século depois, outros mergulhos tripulados passaram a revisitar o local, mas continuam raros.',
+            'Expedições com robôs encontraram vida mesmo nessas condições, inclusive organismos nunca descritos.'
+          ],
+          aviso: 'O fundo não é o fim: é só onde a luz desiste. Você consegue ouvir a pressão em volta de você?'
+        },
+        {
+          id: 'tsangpo',
+          nome: 'Garganta do Tsangpo',
+          tipo: 'montanha',
+          regiao: 'Tibete, China',
+          lat: 29.65, lon: 95.05,
+          resumo: 'Um dos maiores cânions do mundo, com uma cachoeira "escondida".',
+          medida: 'Desnível de milhares de metros',
+          status: 'Remota; partes quase sem registro',
+          esquecimento: 69,
+          fatos: [
+            'O rio Yarlung Tsangpo faz uma curva fechada em torno do pico Namche Barwa, abrindo um dos cânions mais profundos do planeta.',
+            'Por muito tempo, exploradores procuraram uma lendária cachoeira dentro da garganta.',
+            'Em 1998, uma expedição documentou uma queda de cerca de 30 m, conhecida como Hidden Falls.',
+            'Há trechos de difícil acesso, com mata fechada e encostas íngremes, que continuam pouco visitados.'
+          ],
+          aviso: 'Aqui o rio vira a esquina e some. Dizem que o som da água continua depois que ela já passou.'
+        }
+      ];
+
+      const MENSAGENS_SISTEMA = [
+        'Conexão estável.',
+        'Alguém abriu esta página antes de você.',
+        'Você já esteve aqui? O arquivo acha que sim.',
+        'Dados de localização apagados. Restaurando...',
+        'Não olhe para o canto da tela.',
+        'Sinal fraco. Muito fraco. Há algo no cabo.',
+        'Nenhum erro foi encontrado. Isso é o erro.',
+        'Última atualização: ontem. Ou amanhã.',
+        'O mapa está incompleto de propósito.',
+        'Pare de rolar. Ele vai achar você.'
+      ];
+
+      /* ---------------------------------------------------------
+         2. UTILITÁRIOS
+         --------------------------------------------------------- */
+      const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+      const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+
+      function formatarCoord(lat, lon) {
+        const ns = lat >= 0 ? 'N' : 'S';
+        const lo = lon >= 0 ? 'L' : 'O';
+        return Math.abs(lat).toFixed(2) + '° ' + ns + ', ' + Math.abs(lon).toFixed(2) + '° ' + lo;
+      }
+
+      function lerLS(chave, padrao) {
+        try {
+          const v = localStorage.getItem(chave);
+          return v === null ? padrao : JSON.parse(v);
+        } catch (e) { return padrao; }
+      }
+      function gravarLS(chave, valor) {
+        try { localStorage.setItem(chave, JSON.stringify(valor)); } catch (e) { /* ignora */ }
+      }
+
+      /* ---------------------------------------------------------
+         3. ESTADO
+         --------------------------------------------------------- */
+      const estado = { tipo: 'todos', busca: '', selecionadoId: null, hoverId: null };
+
+      function filtrados() {
+        const termo = estado.busca.trim().toLowerCase();
+        return LUGARES.filter(function (l) {
+          const tipoOk = estado.tipo === 'todos' || l.tipo === estado.tipo;
+          const textoOk = !termo || (l.nome + ' ' + l.regiao + ' ' + l.resumo + ' ' + l.tipo).toLowerCase().indexOf(termo) !== -1;
+          return tipoOk && textoOk;
+        });
+      }
+
+      /* ---------------------------------------------------------
+         4. CATÁLOGO
+         --------------------------------------------------------- */
+      const grade = $('#grade');
+      const vazio = $('#vazio');
+
+      function renderCatalogo() {
+        const lista = filtrados();
+        grade.innerHTML = '';
+        vazio.hidden = lista.length > 0;
+
+        lista.forEach(function (l) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'cartao' + (l.id === estado.selecionadoId ? ' selecionado' : '');
+          b.dataset.id = l.id;
+
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.textContent = l.tipo;
+
+          const h = document.createElement('h3');
+          h.textContent = l.nome;
+
+          const reg = document.createElement('p');
+          reg.className = 'regiao';
+          reg.textContent = l.regiao;
+
+          const res = document.createElement('p');
+          res.className = 'resumo';
+          res.textContent = l.resumo;
+
+          b.append(tag, h, reg, res);
+          b.addEventListener('click', function () { selecionar(l.id, true); });
+          grade.appendChild(b);
+        });
+      }
+
+      /* ---------------------------------------------------------
+         5. DOSSIÊ
+         --------------------------------------------------------- */
+      const detalhe = $('#detalheConteudo');
+
+      function renderDossie(l) {
+        detalhe.innerHTML = '';
+
+        const topo = document.createElement('div');
+        topo.className = 'dossie-topo';
+        const h = document.createElement('h3');
+        h.textContent = l.nome;
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = l.tipo;
+        topo.append(h, tag);
+
+        const meta = document.createElement('div');
+        meta.className = 'dossie-meta';
+        [
+          ['Região', l.regiao],
+          ['Coordenadas', formatarCoord(l.lat, l.lon)],
+          ['Escala', l.medida],
+          ['Situação', l.status]
+        ].forEach(function (par) {
+          const d = document.createElement('div');
+          const b = document.createElement('b');
+          b.textContent = par[0];
+          d.append(b, document.createTextNode(par[1]));
+          meta.appendChild(d);
+        });
+
+        const resumo = document.createElement('p');
+        resumo.textContent = l.resumo;
+
+        const ul = document.createElement('ul');
+        ul.className = 'fatos';
+        l.fatos.forEach(function (f) {
+          const li = document.createElement('li');
+          li.textContent = f;
+          ul.appendChild(li);
+        });
+
+        const esq = document.createElement('div');
+        esq.className = 'esquecimento';
+        const rot = document.createElement('p');
+        rot.className = 'mini';
+        rot.textContent = 'Índice de esquecimento (subjetivo): ' + l.esquecimento + '%';
+        const barra = document.createElement('div');
+        barra.className = 'barra';
+        const prog = document.createElement('i');
+        prog.style.width = '0%';
+        barra.appendChild(prog);
+        esq.append(rot, barra);
+
+        const aviso = document.createElement('div');
+        aviso.className = 'aviso';
+        aviso.textContent = '>> ' + l.aviso;
+
+        const acoes = document.createElement('div');
+        acoes.className = 'acoes';
+
+        const copiar = document.createElement('button');
+        copiar.type = 'button';
+        copiar.className = 'botao';
+        copiar.textContent = 'Copiar coordenadas';
+        copiar.addEventListener('click', function () {
+          const texto = l.lat + ', ' + l.lon;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(texto).then(function () {
+              copiar.textContent = 'Copiado. Não conte a ninguém.';
+            }, function () { copiar.textContent = texto; });
+          } else {
+            copiar.textContent = texto;
+          }
+        });
+
+        const mapaLink = document.createElement('a');
+        mapaLink.className = 'botao';
+        mapaLink.href = 'https://www.google.com/maps?q=' + l.lat + ',' + l.lon;
+        mapaLink.target = '_blank';
+        mapaLink.rel = 'noopener noreferrer';
+        mapaLink.textContent = 'Ver no mapa real';
+
+        acoes.append(copiar, mapaLink);
+
+        detalhe.append(topo, meta, resumo, ul, esq, aviso, acoes);
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            prog.style.transition = 'width 1.2s steps(14)';
+            prog.style.width = l.esquecimento + '%';
+          });
+        });
+      }
+
+      function selecionar(id, rolar) {
+        const l = LUGARES.find(function (x) { return x.id === id; });
+        if (!l) return;
+        estado.selecionadoId = id;
+        renderDossie(l);
+        renderCatalogo();
+        if (rolar) {
+          document.getElementById('detalhe').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        incidente();
+      }
+
+      /* ---------------------------------------------------------
+         6. MAPA (canvas)
+         --------------------------------------------------------- */
+      const canvas = $('#mapaCanvas');
+      const ctx = canvas.getContext('2d');
+      const dica = $('#mapaDica');
+      let W = 0, H = 0;
+      const mouse = { x: -999, y: -999 };
+
+      function ajustarCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        W = rect.width; H = rect.height;
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function projetar(lat, lon) {
+        return { x: ((lon + 180) / 360) * W, y: ((90 - lat) / 180) * H };
+      }
+
+      function desenhar(t) {
+        ctx.clearRect(0, 0, W, H);
+
+        const fundo = ctx.createLinearGradient(0, 0, 0, H);
+        fundo.addColorStop(0, '#0a0016');
+        fundo.addColorStop(1, '#14001f');
+        ctx.fillStyle = fundo;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.lineWidth = 1;
+        for (let lon = -180; lon <= 180; lon += 30) {
+          const p = projetar(0, lon);
+          ctx.strokeStyle = 'rgba(91, 26, 140, 0.45)';
+          ctx.beginPath(); ctx.moveTo(p.x, 0); ctx.lineTo(p.x, H); ctx.stroke();
+        }
+        for (let lat = -90; lat <= 90; lat += 30) {
+          const p = projetar(lat, 0);
+          ctx.strokeStyle = lat === 0 ? 'rgba(208, 16, 31, 0.6)' : 'rgba(60, 108, 255, 0.28)';
+          ctx.beginPath(); ctx.moveTo(0, p.y); ctx.lineTo(W, p.y); ctx.stroke();
+        }
+
+        ctx.font = '10px "Courier New", monospace';
+        ctx.fillStyle = 'rgba(141, 141, 156, 0.8)';
+        ctx.fillText('EQUADOR', 6, projetar(0, 0).y - 4);
+        ctx.fillText('90°S', 6, H - 6);
+        ctx.fillText('90°N', 6, 12);
+
+        const visiveis = {};
+        filtrados().forEach(function (l) { visiveis[l.id] = true; });
+        let achouHover = null;
+
+        LUGARES.forEach(function (l) {
+          const p = projetar(l.lat, l.lon);
+          const ativo = !!visiveis[l.id];
+          const sel = l.id === estado.selecionadoId;
+          const dist = Math.hypot(mouse.x - p.x, mouse.y - p.y);
+          const hover = dist < 14 && ativo;
+          if (hover) achouHover = l;
+
+          const pulso = 5 + 3 * Math.sin(t / 420 + l.lon);
+          const cor = sel ? '#ff2a3a' : (ativo ? '#a45bff' : '#4a4a58');
+
+          if (ativo) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, pulso + (sel ? 6 : 3), 0, Math.PI * 2);
+            ctx.strokeStyle = sel ? 'rgba(255,42,58,0.7)' : 'rgba(164,91,255,0.4)';
+            ctx.stroke();
+          }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, hover ? 6 : 4, 0, Math.PI * 2);
+          ctx.fillStyle = cor;
+          ctx.shadowColor = cor;
+          ctx.shadowBlur = ativo ? 12 : 0;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          if (sel || hover) {
+            ctx.font = 'bold 11px "Courier New", monospace';
+            ctx.fillStyle = '#fff';
+            const largura = ctx.measureText(l.nome).width;
+            const tx = Math.min(Math.max(p.x + 10, 4), W - largura - 4);
+            ctx.fillText(l.nome, tx, p.y - 10);
+          }
+        });
+
+        estado.hoverId = achouHover ? achouHover.id : null;
+        canvas.style.cursor = achouHover ? 'pointer' : 'crosshair';
+        dica.textContent = achouHover
+          ? achouHover.nome + ' [' + formatarCoord(achouHover.lat, achouHover.lon) + ']'
+          : '';
+
+        requestAnimationFrame(desenhar);
+      }
+
+      canvas.addEventListener('mousemove', function (e) {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+      });
+      canvas.addEventListener('mouseleave', function () { mouse.x = mouse.y = -999; });
+      canvas.addEventListener('click', function (e) {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+        let melhor = null, menor = 18;
+        filtrados().forEach(function (l) {
+          const p = projetar(l.lat, l.lon);
+          const d = Math.hypot(mouse.x - p.x, mouse.y - p.y);
+          if (d < menor) { menor = d; melhor = l; }
+        });
+        if (melhor) selecionar(melhor.id, true);
+      });
+      canvas.addEventListener('touchstart', function (e) {
+        const t = e.touches[0];
+        const r = canvas.getBoundingClientRect();
+        mouse.x = t.clientX - r.left;
+        mouse.y = t.clientY - r.top;
+      }, { passive: true });
+
+      window.addEventListener('resize', ajustarCanvas);
+
+      /* ---------------------------------------------------------
+         7. FILTROS E BUSCA
+         --------------------------------------------------------- */
+      $('#filtros').addEventListener('click', function (e) {
+        const btn = e.target.closest('.filtro');
+        if (!btn) return;
+        $$('.filtro').forEach(function (f) { f.classList.remove('ativo'); });
+        btn.classList.add('ativo');
+        estado.tipo = btn.dataset.tipo;
+        renderCatalogo();
+      });
+
+      $('#busca').addEventListener('input', function (e) {
+        estado.busca = e.target.value;
+        renderCatalogo();
+      });
+
+      /* ---------------------------------------------------------
+         8. CONTADOR, RELÓGIO, MENSAGENS
+         --------------------------------------------------------- */
+      (function contador() {
+        const el = $('#contador');
+        let n = lerLS('aed_visitas', 665);
+        n = Number(n) + 1;
+        gravarLS('aed_visitas', n);
+        el.textContent = String(n).padStart(6, '0');
+      })();
+
+      function atualizarRelogio() {
+        const agora = new Date();
+        const txt = agora.toLocaleTimeString('pt-BR', { hour12: false });
+        const invertido = txt.split(':').map(function (p) { return p.split('').reverse().join(''); }).join(':');
+        $('#relogio').textContent = invertido;
+      }
+      atualizarRelogio();
+      setInterval(atualizarRelogio, 1000);
+
+      (function mensagensSistema() {
+        const el = $('#sistema');
+        let i = 0;
+        setInterval(function () {
+          i = (i + 1 + Math.floor(Math.random() * 3)) % MENSAGENS_SISTEMA.length;
+          el.style.opacity = 0;
+          setTimeout(function () {
+            el.textContent = MENSAGENS_SISTEMA[i];
+            el.style.opacity = 1;
+          }, 400);
+        }, 7000);
+      })();
+
+      /* ---------------------------------------------------------
+         9. LIVRO DE VISITAS (localStorage)
+         --------------------------------------------------------- */
+      const SEMENTES = [
+        { nome: 'anônimo', msg: 'Achei este site às 3h12 sem saber como. Não lembro de ter digitado o endereço.', data: 'data desconhecida' },
+        { nome: 'M.', msg: 'Perguntei no fórum sobre o Ponto Nemo e me mandaram o link desta página. O fórum já não existe.', data: '??/??/2003' },
+        { nome: 'visitante_0042', msg: 'O contador já estava em 666 quando cheguei. Fiquei com medo de mexer.', data: '31/10/1999' }
+      ];
+
+      const listaLivro = $('#livroLista');
+
+      function renderLivro() {
+        const salvos = lerLS('aed_livro', []);
+        const todos = salvos.concat(SEMENTES);
+        listaLivro.innerHTML = '';
+        todos.forEach(function (m) {
+          const li = document.createElement('li');
+          const quem = document.createElement('span');
+          quem.className = 'quem';
+          quem.textContent = m.nome;
+          const quando = document.createElement('span');
+          quando.className = 'quando';
+          quando.textContent = '[' + m.data + ']';
+          const p = document.createElement('p');
+          p.textContent = m.msg;
+          li.append(quem, quando, p);
+          listaLivro.appendChild(li);
+        });
+      }
+
+      $('#formLivro').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const nome = $('#nome').value.trim().slice(0, 30);
+        const msg = $('#msg').value.trim().slice(0, 200);
+        if (!nome || !msg) return;
+        const salvos = lerLS('aed_livro', []);
+        salvos.unshift({ nome: nome, msg: msg, data: new Date().toLocaleDateString('pt-BR') });
+        gravarLS('aed_livro', salvos.slice(0, 50));
+        e.target.reset();
+        renderLivro();
+        $('#sistema').textContent = 'Assinatura registrada. Ela já estava aqui.';
+      });
+
+      /* ---------------------------------------------------------
+         10. ÁUDIO AMBIENTE (só quando o usuário liga)
+         --------------------------------------------------------- */
+      const btnSom = $('#btnSom');
+      let audio = null;
+
+      function iniciarSom() {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) { btnSom.textContent = 'Sem suporte a áudio'; return; }
+        const ac = new AC();
+        const master = ac.createGain();
+        master.gain.value = 0.0001;
+        master.gain.exponentialRampToValueAtTime(0.12, ac.currentTime + 3);
+
+        const filtro = ac.createBiquadFilter();
+        filtro.type = 'lowpass';
+        filtro.frequency.value = 260;
+
+        const o1 = ac.createOscillator(); o1.type = 'sawtooth'; o1.frequency.value = 55;
+        const o2 = ac.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = 55.7;
+        const o3 = ac.createOscillator(); o3.type = 'sine';     o3.frequency.value = 110.4;
+
+        const lfo = ac.createOscillator(); lfo.frequency.value = 0.08;
+        const lfoGanho = ac.createGain(); lfoGanho.gain.value = 120;
+        lfo.connect(lfoGanho); lfoGanho.connect(filtro.frequency);
+
+        o1.connect(filtro); o2.connect(filtro); o3.connect(filtro);
+        filtro.connect(master); master.connect(ac.destination);
+
+        [o1, o2, o3, lfo].forEach(function (o) { o.start(); });
+        audio = { ac: ac, master: master, nos: [o1, o2, o3, lfo] };
+      }
+
+      function pararSom() {
+        if (!audio) return;
+        const a = audio; audio = null;
+        a.master.gain.cancelScheduledValues(a.ac.currentTime);
+        a.master.gain.setValueAtTime(a.master.gain.value, a.ac.currentTime);
+        a.master.gain.exponentialRampToValueAtTime(0.0001, a.ac.currentTime + 1);
+        setTimeout(function () {
+          a.nos.forEach(function (o) { try { o.stop(); } catch (e) { /* ok */ } });
+          a.ac.close();
+        }, 1100);
+      }
+
+      btnSom.addEventListener('click', function () {
+        if (audio) {
+          pararSom();
+          btnSom.textContent = '\u266B Ligar o zumbido';
+        } else {
+          iniciarSom();
+          if (audio) btnSom.textContent = '\u266B Desligar o zumbido';
+        }
+      });
+
+      /* ---------------------------------------------------------
+         11. ATMOSFERA: glitch, tremores, olhos, rastro, título
+         --------------------------------------------------------- */
+      const reduzir = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const titulo = $('#titulo');
+
+      function glitchTitulo() {
+        if (reduzir) return;
+        titulo.classList.add('on');
+        setTimeout(function () { titulo.classList.remove('on'); }, 220 + Math.random() * 200);
+      }
+      setInterval(function () { if (Math.random() < 0.55) glitchTitulo(); }, 3500);
+
+      function incidente() {
+        if (reduzir) return;
+        const r = Math.random();
+        if (r < 0.35) {
+          document.body.classList.add('tremer');
+          setTimeout(function () { document.body.classList.remove('tremer'); }, 520);
+        } else if (r < 0.45) {
+          document.body.classList.add('invertido');
+          setTimeout(function () { document.body.classList.remove('invertido'); }, 110);
+        }
+      }
+      setInterval(function () { if (Math.random() < 0.12) incidente(); }, 9000);
+
+      const olhos = $('#olhos');
+      setTimeout(function () { olhos.classList.add('visivel'); }, 20000);
+      document.addEventListener('mousemove', function (e) {
+        $$('.olho', olhos).forEach(function (olho) {
+          const r = olho.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const ang = Math.atan2(e.clientY - cy, e.clientX - cx);
+          const pupila = olho.firstElementChild;
+          pupila.style.left = (9 + Math.cos(ang) * 6) + 'px';
+          pupila.style.top = (4 + Math.sin(ang) * 3) + 'px';
+        });
+      });
+
+      if (!reduzir) {
+        const simbolos = ['\u2726', '\u2020', '\u00B7', '\u2727', '\u263E'];
+        let ultimo = 0;
+        document.addEventListener('mousemove', function (e) {
+          const agora = Date.now();
+          if (agora - ultimo < 55) return;
+          ultimo = agora;
+          const s = document.createElement('span');
+          s.className = 'rastro';
+          s.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+          s.style.left = e.clientX + 8 + 'px';
+          s.style.top = e.clientY + 8 + 'px';
+          document.body.appendChild(s);
+          setTimeout(function () { s.remove(); }, 800);
+        });
+      }
+
+      const tituloOriginal = document.title;
+      document.addEventListener('visibilitychange', function () {
+        document.title = document.hidden ? ':: volte. ainda não terminamos ::' : tituloOriginal;
+      });
+
+      /* ---------------------------------------------------------
+         12. INICIALIZAÇÃO
+         --------------------------------------------------------- */
+      renderCatalogo();
+      renderLivro();
+      ajustarCanvas();
+      requestAnimationFrame(desenhar);
+    })();
+  </script>
+</body>
+</html>
